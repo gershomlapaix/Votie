@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
-const morgan = require('morgan')
-const cors = require('cors')
+const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 
@@ -26,5 +26,6 @@ app.use(express.json({ limit: "150mb" }));
 // );
 
 // define the routes here
-app.use('/users', require('./routes/userRoutes'))
+app.use("/users", require("./routes/userRoutes"));
+app.use("/vote", require("./routes/choiceRoutes"));
 module.exports = app;
