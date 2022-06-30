@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 const User = require("./../model/User");
 
 const signToken = (id, role) => {
@@ -10,7 +11,7 @@ const signToken = (id, role) => {
 const createToken = (user, statusCode, req, res) => {
   const token = signToken(user._id, user.role);
 
-  res.cookie("votie-token", token, {
+  res.cookie("votieToken", token, {
     secure: false,
     httpOnly: true,
   });
@@ -51,6 +52,40 @@ exports.signin = async (req, res, next) => {
 
   req.user = user;
   createToken(user, 200, req, res);
+};
+
+exports.protect = async (req, res, next) => {
+  let token = "";
+  try {
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.votieToken) {
+      token = req.cookies.votieToken;
+      console.log(token);
+    }
+
+    if (!token) {
+      return next(new Error("You're not logged in.", 401));
+    }
+
+    const decoded = await promisify(jwt.verify)(
+      token,
+      "voting-1$$-great@##$secretkey"
+    );
+
+    const properUser = await User.findById(decoded.id);
+    if (!properUser) {
+      return next(new Error("The token belongs to this user diminished."));
+    }
+
+    req.user = properUser;
+    next();
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 exports.getAllUsers = async (req, res) => {
