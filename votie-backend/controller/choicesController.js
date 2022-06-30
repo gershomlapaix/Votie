@@ -38,14 +38,6 @@ exports.vote = async (req, res, next) => {
       break;
     }
   }
-
-  // if(foundPoll.votes.includes(mongoose.Types.ObjectId(req.user._id))){
-  //   res.json({message: 'Already voted'}).status(400)
-  // }
-  // else{
-  //   foundPoll.votes.push(req.user._id)
-  //   res.json({message: 'Thanks for your vote.', foundPoll}).status(400)
-  // }
 };
 
 exports.getChoice = async (req, res, next) => {
