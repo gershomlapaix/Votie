@@ -9,5 +9,5 @@ exports.register = async (req, res) => {
     password,
   });
 
-  res.json({message:`New user created`}).status(201)
+  res.json({ message: `New user created` }).status(201);
 };
