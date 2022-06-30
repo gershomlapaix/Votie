@@ -11,3 +11,7 @@ exports.register = async (req, res) => {
 
   res.json({ message: `New user created` }).status(201);
 };
+
+exports.getAllUsers = async (req, res) => {
+//   const users = await User.find({});
+};
