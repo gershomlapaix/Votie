@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.model({
+const userSchema = new mongoose.Schema({
   names: {
     type: String,
   },
@@ -11,6 +11,11 @@ const userSchema = new mongoose.model({
   },
   password: {
     type: String,
+  },
+  role: {
+    type: String,
+    enum: ["USER", "ADMIN"],
+    default: "USER",
   },
 });
 

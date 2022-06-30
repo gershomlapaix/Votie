@@ -1,4 +1,13 @@
+const jwt = require("jsonwebtoken");
 const User = require("./../model/User");
+
+const signToken = (id, role) => {
+  return jwt.sign({ id: id, role: role }, "voting-1$$-great@##$secretkey", {
+    expiresIn: "90d",
+  });
+};
+
+const sendToken = (user, statusCode, req, res) => {};
 
 exports.register = async (req, res) => {
   const { names, email, password } = req.body;
@@ -13,5 +22,5 @@ exports.register = async (req, res) => {
 };
 
 exports.getAllUsers = async (req, res) => {
-//   const users = await User.find({});
+  //   const users = await User.find({});
 };

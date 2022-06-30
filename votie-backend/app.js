@@ -11,20 +11,20 @@ app.set("views", path.join(__dirname, "views"));
 app.use(morgan("dev"));
 app.use(express.json({ limit: "150mb" }));
 
-const whiteList = ["http://localhost:3000"];
-app.use(
-  cors({
-    credentials: true,
-    origin: function (origin, callback) {
-      if (whiteList.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("not allowed by CORS"));
-      }
-    },
-  })
-);
+// const whiteList = ["http://localhost:3000"];
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: function (origin, callback) {
+//       if (whiteList.indexOf(origin) !== -1) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("not allowed by CORS"));
+//       }
+//     },
+//   })
+// );
 
 // define the routes here
-
+app.use('/users', require('./routes/userRoutes'))
 module.exports = app;
