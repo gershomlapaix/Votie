@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native';
 
-export default function Voting() {
+export default function Voting({navigation}) {
   return (
     <View style={styles.votingContainer}>
       <View style={styles.cards}>
@@ -19,7 +19,9 @@ export default function Voting() {
               <Text>Technical director</Text>
             </View>
 
-            <Pressable style={styles.voteBtn}>
+            <Pressable style={styles.voteBtn} onPress={()=>{
+              navigation.navigate("Results")
+            }}>
               <Text style={{ color: '#fff' }}>Vote</Text>
             </Pressable>
           </View>
@@ -56,7 +58,7 @@ export default function Voting() {
             <Pressable style={styles.voteBtn}>
               <Text style={{ color: '#fff' }}>Vote</Text>
             </Pressable>
-          </View>{' '}
+          </View>
           <View style={styles.card}>
             <Image
               style={styles.cardImage}
@@ -75,6 +77,8 @@ export default function Voting() {
             </Pressable>
           </View>
         </View>
+
+        <Text style={{fontWeight:'800', fontSize:16}}>You will view the results after voting</Text>
       </View>
     </View>
   );

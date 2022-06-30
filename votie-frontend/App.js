@@ -1,42 +1,78 @@
+// import * as React from 'react';
+// import { Button, View } from 'react-native';
+// import VotingScreen from './components/voting';
+// // import HomeScreen from './components/Home';
+// import ResultsScreen from './components/Results';
+// import { createDrawerNavigator } from '@react-navigation/drawer';
+// import { NavigationContainer } from '@react-navigation/native';
+
+// function HomeScreen({ navigation }) {
+//   return (
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Button
+//         onPress={() => navigation.navigate('voting page')}
+//         title="Go to notifications"
+//       />
+//     </View>
+//   );
+// }
+
+// function NotificationsScreen({ navigation }) {
+//   return (
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Button onPress={() => navigation.goBack()} title="Go back home" />
+//     </View>
+//   );
+// }
+
+// const Drawer = createDrawerNavigator();
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Drawer.Navigator useLegacyImplementation initialRouteName="Home">
+//         <Drawer.Screen name="Home" component={HomeScreen} />
+//         <Drawer.Screen name="voting page" component={VotingScreen} />
+//         <Drawer.Screen name="Results" component={ResultsScreen} />
+//       </Drawer.Navigator>
+//     </NavigationContainer>
+//   );
+// }
+
+
 import * as React from 'react';
-import { Text, View, StyleSheet, Pressable, Button } from 'react-native';
-import Constants from 'expo-constants';
-import VotingScreen from './components/voting';
+import { Button, View } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
-
-const Home = ({ navigation }) => {
+function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Home screen</Text>
-
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button
-        title="Go to home"
-        onPress={() => {
-          navigation.navigate('voting page');
-        }}
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to "
       />
     </View>
   );
-};
+}
+
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    </View>
+  );
+}
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="voting page" component={VotingScreen} />
-      </Stack.Navigator>
+      <Drawer.Navigator useLegacyImplementation initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    paddingTop: Constants.statusBarHeight,
-    padding: 8,
-  },
-});
