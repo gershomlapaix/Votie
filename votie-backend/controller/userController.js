@@ -7,7 +7,22 @@ const signToken = (id, role) => {
   });
 };
 
-const sendToken = (user, statusCode, req, res) => {};
+const createToken = (user, statusCode, req, res) => {
+  const token = signToken(user._id, user.role);
+
+  res.cookie("votie-token", token, {
+    secure: false,
+    httpOnly: true,
+  });
+
+  user.password = undefined;
+
+  return res.status(statusCode).json({
+    status: "success",
+    token,
+    user,
+  });
+};
 
 exports.register = async (req, res) => {
   const { names, email, password } = req.body;
@@ -19,6 +34,23 @@ exports.register = async (req, res) => {
   });
 
   res.json({ message: `New user created` }).status(201);
+};
+
+exports.signin = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(new Error("Please provide email and password"));
+  }
+
+  const user = await User.findOne({ email }).select("+password");
+
+  if (!user || !(await user.checkPassword(password, user.password))) {
+    return next(new Error("Incorrect email or password"));
+  }
+
+  req.user = user;
+  createToken(user, 200, req, res);
 };
 
 exports.getAllUsers = async (req, res) => {
