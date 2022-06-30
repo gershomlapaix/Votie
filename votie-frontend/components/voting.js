@@ -56,7 +56,7 @@ export default function Voting() {
             <Pressable style={styles.voteBtn}>
               <Text style={{ color: '#fff' }}>Vote</Text>
             </Pressable>
-          </View>{' '}
+          </View>
           <View style={styles.card}>
             <Image
               style={styles.cardImage}
