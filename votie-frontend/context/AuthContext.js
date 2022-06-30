@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
 const AuthContext = React.createContext();
@@ -13,7 +12,6 @@ function AuthContextProvider(props) {
           userToken: action.token,
           isLoading: false,
         };
-        break;
 
       case "SIGN_IN":
         return {
@@ -21,7 +19,6 @@ function AuthContextProvider(props) {
           isSignout: false,
           userToken: action.token,
         };
-        break;
 
       case "SIGN_OUT":
         return {
@@ -34,40 +31,38 @@ function AuthContextProvider(props) {
 
   const [state, dispatch] = React.useReducer(
     reducer,
-    // initial state
-    {
-      isLoading: true,
-      isSignout: true,
-      userToken: null,
-    }
+    { isLoading: true, isSignout: true, userToken: null } // initial state
   );
 
   React.useEffect(() => {
-    const bootStrapAsync = async () => {
+    const bootstrapAsync = async () => {
       let userToken;
 
       try {
-        // load the token from async storage
         userToken = await SecureStore.getItemAsync("user-token");
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
 
       dispatch({ type: "RESTORE_TOKEN", token: userToken });
     };
 
-    bootStrapAsync();
+    bootstrapAsync();
   }, []);
 
   const authContext = React.useMemo(
     () => ({
       signIn: async (data) => {
-        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
+        // const response = await axios.post(
+        //   'http://196.223.240.154:8099/supapp/api/auth/signin',
+        //   {
+        //     login: data.username,
+        //     password: data.password,
+        //   }
+        // );
+        dispatch({ type: "SIGN_IN", token: "response.data.token.accessToken" });
       },
-
-      signOut: async () => {
-        dispatch({ type: "SIGN_OUT", token: "dummy-auth-tokeb" });
-      },
+      signOut: () => dispatch({ type: "SIGN_OUT" }),
       signUp: async (data) => {
         dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
       },
