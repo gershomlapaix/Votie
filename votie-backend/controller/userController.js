@@ -54,7 +54,15 @@ exports.signin = async (req, res, next) => {
 };
 
 exports.getAllUsers = async (req, res) => {
-    const users = await User.find({});
+  const users = await User.find({});
 
-    res.json({users}).status(200)
+  res.json({ users }).status(200);
+};
+
+exports.updateUser = async (req, res, next) => {
+  await User.findByIdAndUpdate(req.params.id, { role: "ADMIN" });
+
+  res.status(204).json({
+    status: "success",
+  });
 };
