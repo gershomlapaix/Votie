@@ -88,6 +88,22 @@ exports.protect = async (req, res, next) => {
   }
 };
 
+exports.checkLogin = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    if (!token) return res.json(false);
+
+    await promisify(jwt.verify)(
+      req.cookies.jwt,
+      "voting-1$$-great@##$secretkey"
+    );
+
+    res.send(true);
+  } catch (err) {
+    res.json(false);
+  }
+};
+
 exports.getAllUsers = async (req, res) => {
   const users = await User.find({});
 

@@ -10,14 +10,15 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(cookieParser());
 
-app.use(cors({
-    origin: 'http://localhost:19006'
-}));
-
+app.use(
+  cors({
+    origin: "http://localhost:19006",
+    credentials: true,
+  })
+);
 
 app.use(morgan("dev"));
 app.use(express.json({ limit: "150mb" }));
-
 
 // define the routes here
 app.use("/users", require("./routes/userRoutes"));
