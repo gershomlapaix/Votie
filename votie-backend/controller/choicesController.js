@@ -18,14 +18,34 @@ exports.vote = async (req, res, next) => {
     _id: mongoose.Types.ObjectId(req.params.id),
   });
 
-  const arr = poll.choices.filter(
-    (choice, index) => String(choice._id) === String(req.params.choiceId)
-    // console.log(String(mongoose.Types.ObjectId(req.params.choiceId)));
-  );
+  let foundPoll;
+  for (let index = 0; index < poll.choices.length; index++) {
+    if (String(poll.choices[index]._id) === String(req.params.choiceId)) {
+      foundPoll = poll.choices[index];
 
-  // if (!poll) return next(new Error("No such choice found."));
+      if (
+        poll.choices[index].votes.includes(
+          mongoose.Types.ObjectId(req.user._id)
+        )
+      ) {
+        res.json({ message: "Already voted" }).status(400);
+      } else {
+        poll.choices[index].votes.push(req.user._id);
+        res.json({ message: "Thanks for your vote.", foundPoll }).status(400);
 
-  console.log(arr);
+        await poll.save();
+      }
+      break;
+    }
+  }
+
+  // if(foundPoll.votes.includes(mongoose.Types.ObjectId(req.user._id))){
+  //   res.json({message: 'Already voted'}).status(400)
+  // }
+  // else{
+  //   foundPoll.votes.push(req.user._id)
+  //   res.json({message: 'Thanks for your vote.', foundPoll}).status(400)
+  // }
 };
 
 exports.getChoice = async (req, res, next) => {
@@ -43,5 +63,3 @@ exports.getAllPolls = async (req, res, next) => {
 
   res.json({ storedPolls }).status(200);
 };
-// 62bd735cbe1cd387c9ecb476
-// 62bd735cbe1cd387c9ecb476
