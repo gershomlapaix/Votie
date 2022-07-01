@@ -12,7 +12,7 @@ const createToken = (user, statusCode, req, res) => {
   const token = signToken(user._id, user.role);
 
   res.cookie("votieToken", token, {
-    secure: false,
+    // secure: false,
     httpOnly: true,
   });
 
@@ -90,11 +90,11 @@ exports.protect = async (req, res, next) => {
 
 exports.checkLogin = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.votieToken;
     if (!token) return res.json(false);
 
     await promisify(jwt.verify)(
-      req.cookies.jwt,
+      req.cookies.votieToken,
       "voting-1$$-great@##$secretkey"
     );
 
