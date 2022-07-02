@@ -1,10 +1,17 @@
 const app = require("./app");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 // database connection
 
+const env = process.env.NODE_ENV || "development";
+const DB_URL =
+  env === "container"
+    ? process.env.DATABASE_URL_CONTAINER
+    : process.env.DATABASE_URL_DEV;
+
 mongoose
-  .connect("mongodb://localhost:27017/votie", {
+  .connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

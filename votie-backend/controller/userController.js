@@ -9,10 +9,10 @@ const signToken = (id, role) => {
 };
 
 const createToken = (user, statusCode, req, res) => {
-  const token = signToken(user._id, user.role);
+  const token = signToken(user._id);
 
   res.cookie("votieToken", token, {
-    // secure: false,
+    secure: false,
     httpOnly: true,
   });
 
@@ -21,9 +21,12 @@ const createToken = (user, statusCode, req, res) => {
   return res.status(statusCode).json({
     status: "success",
     token,
-    user,
+    data: {
+      user,
+    },
   });
 };
+
 
 exports.register = async (req, res) => {
   const { names, email, password } = req.body;
@@ -64,7 +67,6 @@ exports.protect = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
     } else if (req.cookies.votieToken) {
       token = req.cookies.votieToken;
-      console.log(token);
     }
 
     if (!token) {

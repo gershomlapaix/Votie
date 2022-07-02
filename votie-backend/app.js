@@ -17,10 +17,16 @@ app.use(
   })
 );
 
+/*
+app.use((req, res, next) => {
+  console.log(req.cookies.votieToken);
+  next()
+});
+*/
+
 app.use(morgan("dev"));
 app.use(express.json({ limit: "150mb" }));
 
-// define the routes here
 app.use("/users", require("./routes/userRoutes"));
 app.use("/vote", require("./routes/choiceRoutes"));
 module.exports = app;

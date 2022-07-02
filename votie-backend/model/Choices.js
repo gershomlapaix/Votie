@@ -13,6 +13,7 @@ const choiceSchema = new mongoose.Schema(
         votes: [{ type: mongoose.Types.ObjectId, ref: "users" }],
       },
     ],
+    votes: [mongoose.Types.ObjectId],
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

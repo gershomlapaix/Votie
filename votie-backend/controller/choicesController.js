@@ -33,10 +33,24 @@ exports.vote = async (req, res, next) => {
         poll.choices[index].votes.push(req.user._id);
         res.json({ message: "Thanks for your vote.", foundPoll }).status(400);
 
+        // save a the user vote
+        poll.votes.push(req.user._id);
         await poll.save();
       }
       break;
     }
+  }
+};
+
+exports.recordedVoters = async (req, res, next) => {
+  const currentPoll = await Choice.findById({
+    _id: mongoose.Types.ObjectId(req.params.id),
+  });
+
+  if (currentPoll.votes.includes(mongoose.Types.ObjectId(req.user._id))) {
+    res.send(true).status(200);
+  } else {
+    res.send(false);
   }
 };
 
