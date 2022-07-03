@@ -1,0 +1,37 @@
+version: '1'
+services:
+  votie-webv:
+    depends_on: [ votie-backend ]
+    build:
+      context: ./votie-web-version
+      dockerfile: Dockerfile
+    ports: -"3000:3000"
+    volumes:
+      - /app/node_modules
+    restart: on-failure
+    container_name: votie-webv
+
+  votie-backend:
+    depends_on:
+      - mongo
+    build:
+      context: ./votie-backend
+      dockerfile: Dockerfile
+    ports: -"5000:5000"
+    volumes:
+      - /app/node_modules
+    restart: on-failure
+    container_name: votie-backend
+    env_file:
+      - ./votie-backend/.env
+
+  mongo:
+    image: mongo
+    restart: on-failure
+    container_name: mongo-db
+    ports: -"27017:27017"
+    volumes:
+      - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./db/mongo:/data/db
+    env_file:
+      - ./db/.env
