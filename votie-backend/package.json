@@ -23,6 +23,7 @@
     "mongoose-beautiful-unique-validation": "^7.1.1",
     "morgan": "^1.10.0",
     "swagger-jsdoc": "5.0.1",
-    "swagger-ui-express": "^4.4.0"
+    "swagger-ui-express": "^4.4.0",
+    "swaggiffy": "^1.0.5"
   }
 }
