@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { registerSchema, registerSchemas } = require("swaggiffy");
+
 
 const choiceSchema = new mongoose.Schema(
   {
@@ -20,4 +22,5 @@ const choiceSchema = new mongoose.Schema(
 
 const Choice = mongoose.model("choices", choiceSchema);
 
+registerSchema("choices", choiceSchema, { orm: "mongoose" });
 module.exports = Choice;

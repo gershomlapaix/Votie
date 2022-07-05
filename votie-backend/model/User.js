@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { registerSchema, registerSchemas } = require("swaggiffy");
 
 const userSchema = new mongoose.Schema({
   names: {
     type: String,
   },
+  
   email: {
     type: String,
     unique: true,
@@ -35,4 +37,6 @@ userSchema.methods.checkPassword = async function (
 };
 
 const User = mongoose.model("users", userSchema);
+
+registerSchema("User", userSchema, { orm: "mongoose" });
 module.exports = User;
