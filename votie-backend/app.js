@@ -3,6 +3,9 @@ const path = require("path");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerSpec = require("./swaggerDef");
 
 const app = express();
 
@@ -16,6 +19,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /*
 app.use((req, res, next) => {
