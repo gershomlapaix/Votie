@@ -19,23 +19,23 @@ app.use(
   })
 );
 
-// const whitelist = [
-//   "http://localhost:80",
-//   "http://localhost",
-//   "http://localhost:3000",
-// ];
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: function (origin, callback) {
-//       if (whitelist.indexOf(origin) !== -1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//   })
-// );
+const whitelist = [
+  "http://localhost:80",
+  "http://localhost",
+  "http://localhost:3000",
+];
+app.use(
+  cors({
+    credentials: true,
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 /*
 app.use((req, res, next) => {
