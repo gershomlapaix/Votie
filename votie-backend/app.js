@@ -32,6 +32,6 @@ app.use((req, res, next) => {
 app.use(morgan("dev"));
 app.use(express.json({ limit: "150mb" }));
 
-app.use("/users", require("./routes/userRoutes"));
-app.use("/vote", require("./routes/choiceRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/vote", require("./routes/choiceRoutes"));
 module.exports = app;
